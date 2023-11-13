@@ -1,5 +1,12 @@
 .App {
     font-family: 'Roboto Mono', monospace;
-    background-color: #DDE6ED;
+    background-color: #FFFFFF;
     min-height: 100vh;
+}
+
+.Content {
+    background-color: #DDE6ED;
+    padding: 10px;
+    border-radius: 2px;
+    border: 1px solid #526D82
 }
