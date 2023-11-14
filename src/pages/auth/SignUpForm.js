@@ -1,33 +1,73 @@
+import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styles from '../../styles/SignUpForm.module.css';
+import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
 import appStyles from '../../App.module.css'
+import axios from "axios";
 
 const SignUpForm = () => {
+    const [signUpData, setSignUpData] = useState({
+        username: "",
+        password1: "",
+        password2: "",
+    });
+
+    const { username, password1, password2 } = signUpData;
+
+    const [errors, setErrors] = useState({});
+
+    const navigate = useNavigate();
+
+    const handleChange = (event) => {
+        setSignUpData({
+            ...signUpData,
+            [event.target.name]: event.target.value,
+        })
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.post("/dj-rest-auth/registration/", signUpData);
+            navigate("/sign-in");
+        } catch (err) {
+            setErrors(err.message);
+        }
+    };
+
     return (
         <Row className={styles.Row}>
             <Col className="my-auto py-2 p-0 p-md-2" md={6}>
                 <Container className={appStyles.Content}>
                     <h1 className={styles.Header}>Sign up!</h1>
-                    <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" />
-                            <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
-                            </Form.Text>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" controlId="username">
+                            <Form.Label className="d-none">Username</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Username" name="username" value={username} onChange={handleChange} />
                         </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                        {errors.username?.map((message, idx) => (
+                            <div class="alert alert-danger" role="alert"key={idx}>
+                                {message}
+                            </div>
+                        ))}
+                        <Form.Group className="mb-3" controlId="password1">
+                            <Form.Label className="d-none">Password</Form.Label>
+                            <Form.Control type="password" placeholder="Password" name="password1" value={password1} onChange={handleChange} />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Check me out" />
+                        <Form.Group className="mb-3" controlId="password2">
+                            <Form.Label className="d-none">Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="Confirm password"
+                                name="password2"
+                                value={password2}
+                                onChange={handleChange}
+                            />
                         </Form.Group>
                         <Button variant="primary" type="submit">
-                            Submit
+                            Sign Up
                         </Button>
                     </Form>
                 </Container>
