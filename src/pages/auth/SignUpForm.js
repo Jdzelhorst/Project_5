@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import styles from '../../styles/SignUpForm.module.css';
+import styles from '../../styles/SignInUpForm.module.css';
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
 import appStyles from '../../App.module.css'
