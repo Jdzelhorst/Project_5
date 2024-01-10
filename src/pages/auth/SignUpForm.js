@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styles from '../../styles/SignInUpForm.module.css';
@@ -6,8 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from 'react-bootstrap';
 import appStyles from '../../App.module.css'
 import axios from "axios";
+import { SetCurrentUserContext } from "../../App";
 
 const SignUpForm = () => {
+    const setCurrentUser = useContext(SetCurrentUserContext);
+
     const [signUpData, setSignUpData] = useState({
         username: "",
         password1: "",
@@ -30,7 +33,8 @@ const SignUpForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.post("/dj-rest-auth/registration/", signUpData);
+            const {data} = await axios.post("/dj-rest-auth/registration/", signUpData);
+            setCurrentUser(data.user);
             navigate("/sign-in");
         } catch (err) {
             setErrors(err.message);
