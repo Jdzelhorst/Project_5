@@ -6,7 +6,7 @@ import './api/axiosDefaults';
 import SignUpForm from './pages/auth/SignUpForm';
 import SignInForm from './pages/auth/SignInForm';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();

@@ -8,7 +8,7 @@ import { CurrentUserContext } from "../App";
 const NavBar = () => {
   const currentUser = useContext(CurrentUserContext);
   const loggedInIcons = <>{currentUser?.username}</>
-  const loggenOutIcons = (
+  const loggedOutIcons = (
     <>
       <Nav.Link href="/">Home</Nav.Link>
       <Nav.Link href="sign-in">Sign In</Nav.Link>
